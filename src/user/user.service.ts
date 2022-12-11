@@ -41,7 +41,8 @@ export class UserService {
             gender: dto.gender,
             email:dto.email,
             password:dto.password,
-            rol: dto.rol
+            rol: dto.rol,
+            complete: dto.complete
         }
         const user = this.UserRepository.create(userToSave);
         await this.UserRepository.save(user)
