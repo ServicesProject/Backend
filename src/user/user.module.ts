@@ -6,7 +6,7 @@ import { UserEntity } from './user.entity';
 import { DataSource } from 'typeorm';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity])],
   providers: [UserService],
   controllers: [UserController]
 })
