@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/constants';
+import { UserModule } from './user/user.module';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [ConfigModule.forRoot({ 
@@ -20,13 +22,16 @@ import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/co
       username: configService.get<string>(DB_USER),
       password: configService.get<string>(DB_PASSWORD),
       database: configService.get<string>(DB_DATABASE),
-      entities: [],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+      logging:false
     }),
     inject: [ConfigService],
-  })
+  }),
+  UserModule
 ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+}
