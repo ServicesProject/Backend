@@ -8,6 +8,7 @@ import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/co
 import { UserModule } from './user/user.module';
 import { DataSource } from 'typeorm';
 import { WorkModule } from './work/work.module';
+import { RolModule } from './rol/rol.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ 
@@ -30,7 +31,8 @@ import { WorkModule } from './work/work.module';
     inject: [ConfigService],
   }),
   UserModule,
-  WorkModule
+  WorkModule,
+  RolModule
 ],
   controllers: [AppController],
   providers: [AppService],

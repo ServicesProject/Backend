@@ -1,3 +1,4 @@
+import { RolType } from "src/rol/rol.enum"
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({name: 'user'})
@@ -14,4 +15,11 @@ export class UserEntity{
     description: string
     @Column({type: 'varchar', length:50, nullable:false})
     gender:string
+
+    @Column({type: 'varchar', length:40, nullable:false, unique:true})
+    email: string
+    @Column({type: 'varchar',nullable:false})
+    password:string
+    @Column({type: 'enum',nullable:false, enum: RolType})
+    rol: RolType
 }
