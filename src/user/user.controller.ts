@@ -23,9 +23,9 @@ export class UserController {
         return await this.userService.create(dto)
     }
 
-    @UsePipes(new ValidationPipe({whitelist: true}))
     @Put(':id')
     async update(@Param('id', ParseIntPipe) id:number,@Body() dto:UserDto){
+        console.log(dto)
         return await this.userService.update(id, dto)
     }
 

@@ -1,5 +1,6 @@
 import { RolType } from "src/rol/rol.enum"
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { TokenEntity } from "src/token/token.entity"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({name: 'user'})
 export class UserEntity{
@@ -26,4 +27,8 @@ export class UserEntity{
     password:string
     @Column({type: 'enum',nullable:false, enum: RolType})
     rol: RolType
+    
+    @OneToMany(() => TokenEntity, (token) => token.user, { cascade: true})
+    tokens?: TokenEntity;
+
 }
