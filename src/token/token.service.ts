@@ -10,28 +10,18 @@ import * as fs from 'fs';
 
 @Injectable()
 export class TokenService {
-    constructor(@InjectRepository(TokenEntity) private UserRepository: Repository<TokenEntity>){
+    constructor(@InjectRepository(TokenEntity) private tokenRepository: Repository<TokenEntity>){
     }
 
     getToken(user:UserEntity){
         let privateKey = this.getPrivateKey();
         const now = Math.floor(Date.now() / 1000);
         const payload = {
-            sub: user.id,
             iat: now,
-            jti: uuid.v4(),
-            role: user.rol,
-            email: user.email,
             exp: now + 864000,
-            iss: "http://localhost:4200/"
+            user: user
         }
-        return jwt.sign(payload, "secret", function(err,token){
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(token);
-            }
-        })  
+        return jwt.sign(payload, privateKey, {algorithm: 'RS256'})
     }    
 
 
@@ -39,11 +29,35 @@ export class TokenService {
         try {
           const keyPath = path.resolve(
             path.dirname(path.dirname(__dirname)),
-            './src/security/jwtRS256.key',
+            './src/security/private.pem',
           );
           return fs.readFileSync(keyPath);
         } catch (error) {
           throw error.message;
         }
       }
+
+      validateToken(token: string) {
+        return jwt.verify(
+          token,
+          this.getPublicKey(),
+          { algorithms: ['RS256'] },
+          function (err, decoded) {
+            return {err, decoded}
+          },
+        );
+      }
+
+      getPublicKey() {
+        try {
+          const keyPath = path.resolve(
+            path.dirname(path.dirname(__dirname)),
+            './src/security/public.pem',
+          );
+          return fs.readFileSync(keyPath);
+        } catch (error) {
+          throw error.message;
+        }
+      }
+
 }

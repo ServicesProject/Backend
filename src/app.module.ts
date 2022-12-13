@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 
 import { WorkModule } from './work/work.module';
 import { RolModule } from './rol/rol.module';
+import { GuardModule } from './guard/guard.module';
 
 
 
@@ -34,7 +35,8 @@ import { RolModule } from './rol/rol.module';
   }),
   UserModule,
   WorkModule,
-  RolModule
+  RolModule,
+  GuardModule
 ],
   controllers: [AppController],
   providers: [AppService],

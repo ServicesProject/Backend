@@ -32,7 +32,7 @@ import { JwtStrategy } from 'src/strategies/jwt.strategy';
 ],
   providers: [UserService, TokenService, AuthService, ConfigService, JwtStrategy],
   controllers: [UserController, TokenController],
-  exports: [PassportModule]
+  exports: [PassportModule,TokenService]
 })
 export class UserModule {
   constructor(private dataSource: DataSource){}

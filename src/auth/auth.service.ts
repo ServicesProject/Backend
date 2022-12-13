@@ -22,8 +22,8 @@ export class AuthService {
           role: user.rol,
           email: user.email,
         }
-        /*let resp = this.tokenService.getToken(user)*/
-        const token = await this.jwtService.sign(payload)
+        let token = this.tokenService.getToken(user)
+        // const token = await this.jwtService.sign(payload)
         return {token}
       }
     }
