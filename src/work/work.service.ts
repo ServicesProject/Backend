@@ -19,15 +19,15 @@ export class WorkService {
     }
 
     async findById(id:number): Promise<WorkEntity> {
-        const user = await this.WorkRepository.findOne({
+        const worker = await this.WorkRepository.findOne({
             where:{
                 id:id
             }
         })
-        if(!user){
-            throw new NotFoundException({message: 'User is not in the data'})
+        if(!worker){
+            throw new NotFoundException({message: 'Worker is not in the data'})
         }
-        return user
+        return worker
     }
 
     async create(dto: WorkDto): Promise<any>{

@@ -6,8 +6,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/constants';
 import { UserModule } from './user/user.module';
-import { DataSource } from 'typeorm';
+
 import { WorkModule } from './work/work.module';
+import { RolModule } from './rol/rol.module';
+import { GuardModule } from './guard/guard.module';
+
+
 
 @Module({
   imports: [ConfigModule.forRoot({ 
@@ -25,12 +29,14 @@ import { WorkModule } from './work/work.module';
       database: configService.get<string>(DB_DATABASE),
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      logging:true
+      logging:false
     }),
     inject: [ConfigService],
   }),
   UserModule,
-  WorkModule
+  WorkModule,
+  RolModule,
+  GuardModule
 ],
   controllers: [AppController],
   providers: [AppService],
