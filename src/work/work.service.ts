@@ -39,28 +39,30 @@ export class WorkService {
             area:  dto.area,
             address: dto.address,
             workTime: dto.workTime,
+            
+            
         }
-        const user = this.WorkRepository.create(userToSave);
-        await this.WorkRepository.save(user)
+        const worker = this.WorkRepository.create(userToSave);
+        await this.WorkRepository.save(worker)
         return dto
     }
 
     async update(id:number, dto: WorkDto): Promise<any>{
-        const user = await this.findById(id)
-        dto.job? user.job = dto.job: user.job = user.job;
-        dto.experience? user.experience = dto.experience: user.experience = user.experience;
-        dto.contract? user.contract = dto.contract: user.contract = user.contract;
-        dto.area? user.area = dto.area: user.area = user.area;
-        dto.address? user.address = dto.address: user.address = user.address;
-        dto.workTime? user.workTime = dto.workTime: user.workTime = user.workTime;
-        await this.WorkRepository.save(user)
-        return{message: 'Updated user'}
+        const worker = await this.findById(id)
+        dto.job? worker.job = dto.job: worker.job = worker.job;
+        dto.experience? worker.experience = dto.experience: worker.experience = worker.experience;
+        dto.contract? worker.contract = dto.contract: worker.contract = worker.contract;
+        dto.area? worker.area = dto.area: worker.area = worker.area;
+        dto.address? worker.address = dto.address: worker.address = worker.address;
+        dto.workTime? worker.workTime = dto.workTime: worker.workTime = worker.workTime;
+        await this.WorkRepository.save(worker)
+        return{message: 'Updated worker'}
     }
 
     async delete(id: number): Promise<any>{
-        const user = await this.findById(id)
-        await this.WorkRepository.delete(user)
-        return{message: 'User deleted'}
+        const worker = await this.findById(id)
+        await this.WorkRepository.delete(worker)
+        return{message: 'Worker deleted'}
     }
 
 
