@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { WorkEntity } from './work.entity';
 import { Repository } from 'typeorm';
 import { WorkDto } from './dto/work.dto';
+import { CreateWorkDto } from './dto/createWork.dto';
+import {LenderService} from '../lender/lender.service'
 
 @Injectable()
 export class WorkService {
+    LenderService: any;
 
-    constructor(@InjectRepository(WorkEntity) private WorkRepository: Repository<WorkEntity>){
+    constructor(@InjectRepository(WorkEntity) private WorkRepository: Repository<WorkEntity>, private lenderRepository: LenderService){
     }
 
     async getAll(): Promise<WorkEntity[]>{
@@ -30,21 +33,20 @@ export class WorkService {
         return worker
     }
 
-    async create(dto: WorkDto): Promise<any>{
-        let userToSave: WorkEntity = {
-            id : dto.id,
+    async create(dto: CreateWorkDto): Promise<any>{
+        const lender = await this.lenderRepository.findByIdLender(dto.lenderId)
+        let workToSave: WorkEntity = {
+            id: dto.id,
             job: dto.job,
             experience: dto.experience,
-            contract : dto.contract,
-            area:  dto.area,
+            contract: dto.contract,
+            area: dto.area,
             address: dto.address,
             workTime: dto.workTime,
-            
-            
+            lender: lender
         }
-        const worker = this.WorkRepository.create(userToSave);
-        await this.WorkRepository.save(worker)
-        return dto
+        const work = this.WorkRepository.create(workToSave);
+        return await this.WorkRepository.save(work)
     }
 
     async update(id:number, dto: WorkDto): Promise<any>{

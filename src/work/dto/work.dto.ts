@@ -34,4 +34,6 @@ export class WorkDto{
     @IsString()
     @IsNotEmpty()
     workTime?: string
+
+    
 }

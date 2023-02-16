@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { WorkModule } from './work/work.module';
 import { RolModule } from './rol/rol.module';
 import { GuardModule } from './guard/guard.module';
+import { LenderModule } from './lender/lender.module';
 
 
 
@@ -36,7 +37,8 @@ import { GuardModule } from './guard/guard.module';
   UserModule,
   WorkModule,
   RolModule,
-  GuardModule
+  GuardModule,
+  LenderModule
 ],
   controllers: [AppController],
   providers: [AppService],

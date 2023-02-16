@@ -1,6 +1,7 @@
 import { type } from "os"
+import { LenderEntity } from "src/lender/lender.entity"
 import { UserEntity } from "src/user/user.entity"
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({name: 'work'})
 export class WorkEntity{
@@ -25,5 +26,6 @@ export class WorkEntity{
     @Column({type: 'varchar', length:50, nullable:false})
     workTime: string
 
-    
+    @ManyToOne(() => LenderEntity, (lender) => lender.works)
+    lender: LenderEntity;
 }

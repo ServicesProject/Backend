@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CreateWorkDto } from './dto/createWork.dto';
 import { WorkDto } from './dto/work.dto';
 import { WorkService } from './work.service';
 
@@ -19,7 +20,7 @@ export class WorkController {
 
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Post()
-    async create(@Body() dto:WorkDto){
+    async create(@Body() dto:CreateWorkDto){
         return await this.workService.create(dto)
     }
 
