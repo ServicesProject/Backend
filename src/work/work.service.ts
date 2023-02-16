@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { WorkEntity } from './work.entity';
 import { Repository } from 'typeorm';
 import { WorkDto } from './dto/work.dto';
+import { CreateWorkDto } from './dto/createWork.dto';
+import {LenderService} from '../lender/lender.service'
 
 @Injectable()
 export class WorkService {
+    LenderService: any;
 
-    constructor(@InjectRepository(WorkEntity) private WorkRepository: Repository<WorkEntity>){
+    constructor(@InjectRepository(WorkEntity) private WorkRepository: Repository<WorkEntity>, private lenderRepository: LenderService){
     }
 
     async getAll(): Promise<WorkEntity[]>{
@@ -30,37 +33,38 @@ export class WorkService {
         return worker
     }
 
-    async create(dto: WorkDto): Promise<any>{
-        let userToSave: WorkEntity = {
-            id : dto.id,
+    async create(dto: CreateWorkDto): Promise<any>{
+        const lender = await this.lenderRepository.findByIdLender(dto.lenderId)
+        let workToSave: WorkEntity = {
+            id: dto.id,
             job: dto.job,
             experience: dto.experience,
-            contract : dto.contract,
-            area:  dto.area,
+            contract: dto.contract,
+            area: dto.area,
             address: dto.address,
             workTime: dto.workTime,
+            lender: lender
         }
-        const user = this.WorkRepository.create(userToSave);
-        await this.WorkRepository.save(user)
-        return dto
+        const work = this.WorkRepository.create(workToSave);
+        return await this.WorkRepository.save(work)
     }
 
     async update(id:number, dto: WorkDto): Promise<any>{
-        const user = await this.findById(id)
-        dto.job? user.job = dto.job: user.job = user.job;
-        dto.experience? user.experience = dto.experience: user.experience = user.experience;
-        dto.contract? user.contract = dto.contract: user.contract = user.contract;
-        dto.area? user.area = dto.area: user.area = user.area;
-        dto.address? user.address = dto.address: user.address = user.address;
-        dto.workTime? user.workTime = dto.workTime: user.workTime = user.workTime;
-        await this.WorkRepository.save(user)
-        return{message: 'Updated user'}
+        const worker = await this.findById(id)
+        dto.job? worker.job = dto.job: worker.job = worker.job;
+        dto.experience? worker.experience = dto.experience: worker.experience = worker.experience;
+        dto.contract? worker.contract = dto.contract: worker.contract = worker.contract;
+        dto.area? worker.area = dto.area: worker.area = worker.area;
+        dto.address? worker.address = dto.address: worker.address = worker.address;
+        dto.workTime? worker.workTime = dto.workTime: worker.workTime = worker.workTime;
+        await this.WorkRepository.save(worker)
+        return{message: 'Updated worker'}
     }
 
     async delete(id: number): Promise<any>{
-        const user = await this.findById(id)
-        await this.WorkRepository.delete(user)
-        return{message: 'User deleted'}
+        const worker = await this.findById(id)
+        await this.WorkRepository.delete(worker)
+        return{message: 'Worker deleted'}
     }
 
 

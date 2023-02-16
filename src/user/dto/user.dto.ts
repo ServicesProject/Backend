@@ -5,17 +5,14 @@ import { RolType } from "src/rol/rol.enum"
 export class UserDto{
     id?:number
     
-    
     @Transform(({value}): string => value?.trim())
     name?:string
 
-    
     @Transform(({value}): string => value?.trim())
     lastName?:string
 
     phone?:string
 
-    
     @Transform(({value}): string => value?.trim())
     description?: string
 
