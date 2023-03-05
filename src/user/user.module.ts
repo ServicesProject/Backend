@@ -13,6 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JWT_SECRET } from 'src/config/constants';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/strategies/jwt.strategy';
+import { LenderModule } from 'src/lender/lender.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, TokenEntity]), 
@@ -32,7 +33,7 @@ import { JwtStrategy } from 'src/strategies/jwt.strategy';
 ],
   providers: [UserService, TokenService, AuthService, ConfigService, JwtStrategy],
   controllers: [UserController, TokenController],
-  exports: [PassportModule,TokenService]
+  exports: [PassportModule,TokenService, UserService]
 })
 export class UserModule {
   constructor(private dataSource: DataSource){}

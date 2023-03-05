@@ -17,6 +17,8 @@ export class LenderController {
         return await this.lenderService.create(dto)
     }
 
+    
+
     @Get(':id/works')
     async getAllWorks(@Param('id', ParseIntPipe) id:number){
         return await this.lenderService.getLenderWorkers(id)

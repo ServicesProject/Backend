@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { LenderService } from 'src/lender/lender.service';
+import { RolType } from 'src/rol/rol.enum';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './user.entity';
