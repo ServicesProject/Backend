@@ -13,7 +13,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JWT_SECRET } from 'src/config/constants';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/strategies/jwt.strategy';
-import { LenderModule } from 'src/lender/lender.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, TokenEntity]), 

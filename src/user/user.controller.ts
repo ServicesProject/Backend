@@ -28,7 +28,7 @@ export class UserController {
 
     @Put(':id')
     async update(@Param('id', ParseIntPipe) id:number,@Body() dto:UserDto){
-        console.log(dto)
+
         return await this.userService.update(id, dto)
     }
 

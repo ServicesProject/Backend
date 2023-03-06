@@ -34,7 +34,7 @@ export class WorkService {
     }
 
     async create(dto: CreateWorkDto): Promise<any>{
-        const lender = await this.lenderRepository.findByIdLender(dto.lenderId)
+        const lender = await this.lenderRepository.findByEmailLender(dto.lenderEmail)
         let workToSave: WorkEntity = {
             id: dto.id,
             job: dto.job,

@@ -76,7 +76,6 @@ export class UserService {
         
         return await this.UserRepository.save(user) 
 
-        
     }
 
     async delete(id: number): Promise<any>{
