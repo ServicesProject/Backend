@@ -72,6 +72,8 @@ export class LenderService {
             dto.phone? lender.phone = dto.phone: lender.phone = lender.phone;
             dto.description? lender.description = dto.description: lender.description = lender.description;
             dto.gender? lender.gender = dto.gender: lender.gender = lender.gender;
+            dto.ci? lender.ci = dto.ci: lender.ci = lender.ci;
+            dto.birthdate? lender.birthdate = dto.birthdate: lender.birthdate = lender.birthdate;
             return await this.LenderRepository.save(lender)
         }
         else{

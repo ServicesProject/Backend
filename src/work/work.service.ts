@@ -43,6 +43,8 @@ export class WorkService {
             area: dto.area,
             address: dto.address,
             workTime: dto.workTime,
+            category:dto.category,
+            salary:dto.salary,
             lender: lender
         }
         const work = this.WorkRepository.create(workToSave);
@@ -57,8 +59,9 @@ export class WorkService {
         dto.area? worker.area = dto.area: worker.area = worker.area;
         dto.address? worker.address = dto.address: worker.address = worker.address;
         dto.workTime? worker.workTime = dto.workTime: worker.workTime = worker.workTime;
-        await this.WorkRepository.save(worker)
-        return{message: 'Updated worker'}
+        dto.salary? worker.salary = dto.salary: worker.salary = worker.salary;
+        dto.category? worker.category = dto.category: worker.category = worker.category;
+        return await this.WorkRepository.save(worker)
     }
 
     async delete(id: number): Promise<any>{

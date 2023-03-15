@@ -9,6 +9,12 @@ export class WorkEntity{
     id: number
 
     @Column({type: 'varchar', length:50, nullable:false})
+    category: string
+
+    @Column({type: 'varchar', length:50, nullable:false})
+    salary: string
+
+    @Column({type: 'varchar', length:50, nullable:false})
     job: string
 
     @Column({type: 'varchar', length:50, nullable:false})

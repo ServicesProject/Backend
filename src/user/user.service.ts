@@ -57,7 +57,9 @@ export class UserService {
             email: dto.email,
             password: dto.password,
             rol: dto.rol,
-            complete: dto.complete
+            complete: dto.complete,
+            ci: dto.ci,
+            birthdate: dto.birthdate
         }
         const user = this.UserRepository.create(userToSave);
         await this.UserRepository.save(user)
@@ -71,11 +73,12 @@ export class UserService {
         dto.lastName? user.lastName = dto.lastName: user.lastName = user.lastName;
         dto.phone? user.phone = dto.phone: user.phone = user.phone;
         dto.description? user.description = dto.description: user.description = user.description;
+        dto.ci? user.ci = dto.ci: user.ci = user.ci;
         dto.gender? user.gender = dto.gender: user.gender = user.gender;
+        dto.birthdate? user.birthdate = dto.birthdate: user.birthdate = user.birthdate;
         this.UserRepository.merge(user,dto)
         
-        return await this.UserRepository.save(user) 
-
+        return await this.UserRepository.save(user)
     }
 
     async delete(id: number): Promise<any>{

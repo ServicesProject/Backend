@@ -16,8 +16,11 @@ export class UserDto{
     @Transform(({value}): string => value?.trim())
     description?: string
 
-    
     gender?:string
+
+    ci:string
+
+    birthdate: Date
 
     complete?: boolean
 

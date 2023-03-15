@@ -14,6 +14,11 @@ export class BaseEntity{
     @Column({type: 'varchar', length:50})
     gender:string
 
+    @Column({type: 'varchar'})
+    ci:string
+    @Column({ type: 'date' })
+    birthdate: Date;
+
     @Column({type: 'varchar', length:40, nullable:false, unique:true})
     email: string
 }

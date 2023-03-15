@@ -9,6 +9,16 @@ export class WorkDto{
     @IsString()
     @Transform(({value}): string => value?.trim())
     @IsNotEmpty()
+    category?: string
+
+    @IsString()
+    @Transform(({value}): string => value?.trim())
+    @IsNotEmpty()
+    salary?: string
+
+    @IsString()
+    @Transform(({value}): string => value?.trim())
+    @IsNotEmpty()
     job?: string
 
     @IsString()
