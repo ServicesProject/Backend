@@ -45,5 +45,10 @@ export class WorkDto{
     @IsNotEmpty()
     workTime?: string
 
+    //coordinates
     
+    @IsNotEmpty()
+    lat: string;
+    @IsNotEmpty()
+    lng: string;
 }

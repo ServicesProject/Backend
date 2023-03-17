@@ -31,6 +31,13 @@ export class WorkEntity{
 
     @Column({type: 'varchar', length:50, nullable:false})
     workTime: string
+    
+    //coordinates
+
+    @Column({type: 'varchar', length:50, nullable:false})
+    lat:string
+    @Column({type: 'varchar', length:50, nullable:false})
+    lng: string;
 
     @ManyToOne(() => LenderEntity, (lender) => lender.works)
     lender: LenderEntity;

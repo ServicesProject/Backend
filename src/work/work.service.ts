@@ -45,6 +45,8 @@ export class WorkService {
             workTime: dto.workTime,
             category:dto.category,
             salary:dto.salary,
+            lat:dto.lat,
+            lng:dto.lng,
             lender: lender
         }
         const work = this.WorkRepository.create(workToSave);
@@ -61,6 +63,8 @@ export class WorkService {
         dto.workTime? worker.workTime = dto.workTime: worker.workTime = worker.workTime;
         dto.salary? worker.salary = dto.salary: worker.salary = worker.salary;
         dto.category? worker.category = dto.category: worker.category = worker.category;
+        dto.lat? worker.lat = dto.lat: worker.lat = worker.lat;
+        dto.lng? worker.lng = dto.lng: worker.lng = worker.lng;
         return await this.WorkRepository.save(worker)
     }
 
