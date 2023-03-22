@@ -8,7 +8,6 @@ export class UserDto{
     @Transform(({value}): string => value?.trim())
     name?:string
 
-    @Transform(({value}): string => value?.trim())
     lastName?:string
 
     phone?:string

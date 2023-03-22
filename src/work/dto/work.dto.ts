@@ -7,7 +7,6 @@ export class WorkDto{
     id?:number
 
     @IsString()
-    @Transform(({value}): string => value?.trim())
     @IsNotEmpty()
     category?: string
 
@@ -16,9 +15,6 @@ export class WorkDto{
     @IsNotEmpty()
     salary?: string
 
-    @IsString()
-    @Transform(({value}): string => value?.trim())
-    @IsNotEmpty()
     job?: string
 
     @IsString()
