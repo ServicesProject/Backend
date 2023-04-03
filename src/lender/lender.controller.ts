@@ -18,13 +18,13 @@ export class LenderController {
     }
 
     @Get(':id')
-    async getOne(@Param('id', ParseIntPipe) id:number){
+    async getOneLender(@Param('id', ParseIntPipe) id:number){
         return await this.lenderService.findByIdLender(id)
     }
     
     @Get(':id/works')
     async getAllWorks(@Param('id', ParseIntPipe) id:number){
-        return await this.lenderService.getLenderWorkers(id)
+        return await this.lenderService.getLenderWorks(id)
     }
 
     @Put()

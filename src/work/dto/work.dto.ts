@@ -15,6 +15,9 @@ export class WorkDto{
     @IsNotEmpty()
     salary?: string
 
+    @IsString()
+    @Transform(({value}): string => value?.trim())
+    @IsNotEmpty()
     job?: string
 
     @IsString()

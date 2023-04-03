@@ -11,6 +11,7 @@ import { WorkModule } from './work/work.module';
 import { RolModule } from './rol/rol.module';
 import { GuardModule } from './guard/guard.module';
 import { LenderModule } from './lender/lender.module';
+import { SharedUsersModule } from './shared/shared-users/shared-users.module';
 
 
 
@@ -38,7 +39,8 @@ import { LenderModule } from './lender/lender.module';
   WorkModule,
   RolModule,
   GuardModule,
-  LenderModule
+  LenderModule,
+  SharedUsersModule
 ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { LenderDto } from './dto/lender.dto';
 import { LenderEntity } from './lender.entity';
 
+
 @Injectable()
 export class LenderService {
     constructor(@InjectRepository(LenderEntity) private LenderRepository: Repository<LenderEntity>, private userService: UserService){
@@ -34,7 +35,7 @@ export class LenderService {
             }
         })
         if(!lender){
-            throw new NotFoundException({message: 'User is not in the data'})
+            throw new NotFoundException({message: 'Lender is not in the data'})
         }
         return lender
     }
@@ -52,14 +53,15 @@ export class LenderService {
         return lender
     }
 
-    async getLenderWorkers(id:number): Promise<any>{
+    async getLenderWorks(id:number): Promise<any>{
         const workers = await this.LenderRepository.findOne({
            where:{id:id},
            relations:['works']
         })
         
-        return workers
+        return workers.works
     }
+
     
     
     async updateLender(email:string, dto: LenderDto): Promise<any>{

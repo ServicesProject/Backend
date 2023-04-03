@@ -5,12 +5,10 @@ import { DataSource } from 'typeorm';
 import { LenderController } from './lender.controller';
 import { LenderEntity } from './lender.entity';
 import { LenderService } from './lender.service';
+import { SharedUsersModule } from 'src/shared/shared-users/shared-users.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LenderEntity]), UserModule],
-  providers: [LenderService],
-  controllers: [LenderController],
-  exports:[LenderService]
+  imports: [SharedUsersModule],
 })
 export class LenderModule {
   constructor(private dataSource: DataSource){}

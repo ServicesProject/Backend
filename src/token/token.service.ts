@@ -7,13 +7,14 @@ import * as jwt from 'jsonwebtoken';
 import * as uuid from 'uuid';
 import * as path from 'path';
 import * as fs from 'fs';
+import { LenderEntity } from 'src/lender/lender.entity';
 
 @Injectable()
 export class TokenService {
     constructor(@InjectRepository(TokenEntity) private tokenRepository: Repository<TokenEntity>){
     }
 
-    getToken(user:UserEntity){
+    getToken(user:UserEntity | LenderEntity){
         let privateKey = this.getPrivateKey();
         const now = Math.floor(Date.now() / 1000);
         const payload = {
@@ -22,9 +23,8 @@ export class TokenService {
             user: user
         }
         return jwt.sign(payload, privateKey, {algorithm: 'RS256'})
-    }    
-
-
+    }
+    
     getPrivateKey() {
         try {
           const keyPath = path.resolve(
