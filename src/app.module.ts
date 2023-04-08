@@ -13,13 +13,42 @@ import { GuardModule } from './guard/guard.module';
 import { LenderModule } from './lender/lender.module';
 import { SharedUsersModule } from './shared/shared-users/shared-users.module';
 
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MailServiceService } from './mailer/mail-service/mail-service.service';
 
 
 @Module({
   imports: [ConfigModule.forRoot({ 
     envFilePath: '.env', 
-    isGlobal: true 
-  }),
+    isGlobal: true,
+    }),
+    MailerModule.forRootAsync({
+      useFactory: () => ({
+        transport: {
+          host: 'smtp-mail.outlook.com',
+          service: 'smtp-mail.outlook.com',
+          port: 587,
+          secure: false,
+          auth: {
+            user: 'nexa.bolivia@outlook.com',
+            pass: 'nexanexa38',
+          },
+        },
+        defaults: {
+          from: `"No Reply" <${
+            'nexa.bolivia@outlook.com'
+          }>`,
+        },
+        template: {
+          dir: __dirname + '/mailer/template',
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
+      }),
+    }), 
   TypeOrmModule.forRootAsync({
     imports: [ConfigModule],
     useFactory: (configService: ConfigService) => ({
@@ -43,7 +72,7 @@ import { SharedUsersModule } from './shared/shared-users/shared-users.module';
   SharedUsersModule
 ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, MailServiceService],
 })
 export class AppModule {
 }

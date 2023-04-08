@@ -23,6 +23,8 @@ export class UserDto{
 
     complete?: boolean
 
+    accountConfirmed?: boolean
+
     @IsString()
     @Transform(({value}): string => value?.trim())
     @IsNotEmpty()

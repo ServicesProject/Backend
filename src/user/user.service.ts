@@ -1,15 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LenderService } from 'src/lender/lender.service';
-import { RolType } from 'src/rol/rol.enum';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './user.entity';
+import { MailServiceService } from 'src/mailer/mail-service/mail-service.service';
+import { ValidateDto } from 'src/token/dto/validate.dto';
 
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(UserEntity) private UserRepository: Repository<UserEntity>){
+    constructor(@InjectRepository(UserEntity) private UserRepository: Repository<UserEntity>, private mailService: MailServiceService){
         
     }
 
@@ -59,10 +59,12 @@ export class UserService {
             rol: dto.rol,
             complete: dto.complete,
             ci: dto.ci,
-            birthdate: dto.birthdate
+            birthdate: dto.birthdate,
+            accountConfirmed: dto.accountConfirmed
         }
         const user = this.UserRepository.create(userToSave);
         await this.UserRepository.save(user)
+        this.mailService.sendEmailToConfirmAccounht(user.email)
         return dto
     }
 
@@ -78,6 +80,14 @@ export class UserService {
         dto.birthdate? user.birthdate = dto.birthdate: user.birthdate = user.birthdate;
         this.UserRepository.merge(user,dto)
         
+        return await this.UserRepository.save(user)
+    }
+
+    async validateEmailRegister(email:string): Promise<any>{
+        const user = await this.findByEmail(email)
+        var usertosave = user
+        usertosave.accountConfirmed = true
+        this.UserRepository.merge(user,usertosave)
         return await this.UserRepository.save(user)
     }
 

@@ -9,6 +9,9 @@ export class UserEntity extends BaseEntity{
     @Column({type:'boolean'})
     complete: boolean
 
+    @Column({type:'boolean'})
+    accountConfirmed: boolean
+
     @Column({type: 'varchar',nullable:false})
     password:string
     @Column({type: 'enum',nullable:false, enum: RolType})
