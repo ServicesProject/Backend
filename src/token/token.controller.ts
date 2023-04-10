@@ -31,6 +31,8 @@ export class TokenController {
     @Authorization(false)
     @Put('validateEmail')
     async validateEmail(@Body() dto: ValidateDto){
+        console.log('entra');
+        
         try{
             await this.authenticationService.validate(dto.email)
         }

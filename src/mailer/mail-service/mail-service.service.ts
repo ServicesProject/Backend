@@ -12,7 +12,7 @@ export class MailServiceService {
             subject: 'Verificacion del email',
             template: 'mail.template.hbs', // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
             context: {
-              url: `http://localhost:4200/confirmarEmail&${{email}}`
+              url: `http://localhost:4200/confirmarEmail?email=${email.toString()}`
             },
           })
           .then(() => {
