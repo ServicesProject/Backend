@@ -44,6 +44,8 @@ export class WorkDto{
     @IsNotEmpty()
     workTime?: string
 
+    creationDate: Date
+
     //coordinates
     
     @IsNotEmpty()

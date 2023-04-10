@@ -76,6 +76,7 @@ export class LenderService {
             dto.gender? lender.gender = dto.gender: lender.gender = lender.gender;
             dto.ci? lender.ci = dto.ci: lender.ci = lender.ci;
             dto.birthdate? lender.birthdate = dto.birthdate: lender.birthdate = lender.birthdate;
+            this.LenderRepository.merge(lender,dto)
             return await this.LenderRepository.save(lender)
         }
         else{

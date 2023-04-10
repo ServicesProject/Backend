@@ -7,9 +7,6 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 export class UserEntity extends BaseEntity{
 
     @Column({type:'boolean'})
-    complete: boolean
-
-    @Column({type:'boolean'})
     accountConfirmed: boolean
 
     @Column({type: 'varchar',nullable:false})

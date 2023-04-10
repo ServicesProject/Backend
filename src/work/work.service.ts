@@ -14,7 +14,9 @@ export class WorkService {
     }
 
     async getAll(): Promise<WorkEntity[]>{
-        const list = await this.WorkRepository.find()
+        const list = await this.WorkRepository.find({
+            relations:['lender']
+        })
         if(!list.length){
             throw new NotFoundException({message: 'Empty data'})
         }
@@ -47,6 +49,7 @@ export class WorkService {
             salary:dto.salary,
             lat:dto.lat,
             lng:dto.lng,
+            creationDate: new Date(),
             lender: lender
         }
         const work = this.WorkRepository.create(workToSave);

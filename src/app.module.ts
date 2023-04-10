@@ -36,7 +36,7 @@ import { MailServiceService } from './mailer/mail-service/mail-service.service';
           },
         },
         defaults: {
-          from: `"No Reply" <${
+          from: `"Nexa" <${
             'nexa.bolivia@outlook.com'
           }>`,
         },
