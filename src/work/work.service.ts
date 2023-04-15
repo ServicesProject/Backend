@@ -5,11 +5,10 @@ import { Repository } from 'typeorm';
 import { WorkDto } from './dto/work.dto';
 import { CreateWorkDto } from './dto/createWork.dto';
 import {LenderService} from '../lender/lender.service'
+import { searchWorks} from './dto/searchWork.dto';
 
 @Injectable()
 export class WorkService {
-    LenderService: any;
-
     constructor(@InjectRepository(WorkEntity) private WorkRepository: Repository<WorkEntity>, private lenderRepository: LenderService){
     }
 
@@ -35,6 +34,18 @@ export class WorkService {
         return worker
     }
 
+    async getlenderWork(id:number): Promise<WorkEntity> {
+        const worker = await this.WorkRepository.findOne({
+            where:{
+                id:id
+            }, relations:['lender']
+        })
+        if(!worker){
+            throw new NotFoundException({message: 'Worker is not in the data'})
+        }
+        return worker
+    }
+
     async create(dto: CreateWorkDto): Promise<any>{
         const lender = await this.lenderRepository.findByEmailLender(dto.lenderEmail)
         let workToSave: WorkEntity = {
@@ -50,7 +61,8 @@ export class WorkService {
             lat:dto.lat,
             lng:dto.lng,
             creationDate: new Date(),
-            lender: lender
+            lender: lender,
+            rating: null
         }
         const work = this.WorkRepository.create(workToSave);
         return await this.WorkRepository.save(work)
@@ -69,6 +81,35 @@ export class WorkService {
         dto.lat? worker.lat = dto.lat: worker.lat = worker.lat;
         dto.lng? worker.lng = dto.lng: worker.lng = worker.lng;
         return await this.WorkRepository.save(worker)
+    }
+
+    async searchWorksintheMap(dto: searchWorks): Promise<any>{
+        const queryBuilder = this.WorkRepository.createQueryBuilder('work');
+
+        if(dto.area){
+            queryBuilder.andWhere('work.area = :area', { area: dto.area });
+        }
+
+        if(dto.category){
+            queryBuilder.andWhere('work.category = :category', { category: dto.category });
+        }
+
+        if(dto.experience){
+            queryBuilder.andWhere('work.experience = :experience', { experience: dto.experience });
+        }
+
+        if(dto.contract){
+            queryBuilder.andWhere('work.contract = :contract', { contract: dto.contract });
+        }
+
+        if(dto.workTime){
+            queryBuilder.andWhere('work.workTime = :workTime', { workTime: dto.workTime });
+        }
+
+        queryBuilder.leftJoinAndSelect('work.lender', 'lender')
+
+        const works = await queryBuilder.getMany();
+        return works;
     }
 
     async delete(id: number): Promise<any>{

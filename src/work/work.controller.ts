@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UsePipes
 import { CreateWorkDto } from './dto/createWork.dto';
 import { WorkDto } from './dto/work.dto';
 import { WorkService } from './work.service';
+import { searchWorks} from './dto/searchWork.dto';
 
 @Controller('work')
 export class WorkController {
@@ -17,6 +18,12 @@ export class WorkController {
     async getOne(@Param('id', ParseIntPipe) id:number){
         return await this.workService.findById(id)
     }
+
+    @Get(':id/lenderWork')
+    async getLenderworks(@Param('id', ParseIntPipe) id:number){
+        return await this.workService.getlenderWork(id)
+    }
+
 
     @UsePipes(new ValidationPipe({whitelist: true}))
     @Post()
@@ -34,4 +41,10 @@ export class WorkController {
     async delete(@Param('id', ParseIntPipe) id:number){
         return await this.workService.delete(id)
     }
+
+    @Post('filtro')
+    async dataFilter(@Body() dto:searchWorks){
+        return await this.workService.searchWorksintheMap(dto)
+    }
+
 }

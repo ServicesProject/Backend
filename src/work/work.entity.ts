@@ -1,7 +1,6 @@
-import { type } from "os"
 import { LenderEntity } from "src/lender/lender.entity"
-import { UserEntity } from "src/user/user.entity"
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { RatingEntity } from "src/rating/rating.entity"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({name: 'work'})
 export class WorkEntity{
@@ -44,4 +43,7 @@ export class WorkEntity{
 
     @ManyToOne(() => LenderEntity, (lender) => lender.works)
     lender: LenderEntity;
+
+    @OneToMany(() => RatingEntity, (rating) => rating.work)
+    rating: RatingEntity
 }

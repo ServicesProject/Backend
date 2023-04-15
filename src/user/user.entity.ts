@@ -1,4 +1,5 @@
 import { BaseEntity } from "src/base/base.entity"
+import { RatingEntity } from "src/rating/rating.entity"
 import { RolType } from "src/rol/rol.enum"
 import { TokenEntity } from "src/token/token.entity"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
@@ -16,5 +17,6 @@ export class UserEntity extends BaseEntity{
     
     @OneToMany(() => TokenEntity, (token) => token.user, { cascade: true})
     tokens?: TokenEntity;
+
 
 }

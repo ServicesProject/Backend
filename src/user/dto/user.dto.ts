@@ -19,7 +19,7 @@ export class UserDto{
 
     ci:string
 
-    birthdate: Date
+    birthdate?: Date
 
     complete?: boolean
 
