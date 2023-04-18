@@ -12,8 +12,6 @@ export class UserDto{
 
     phone?:string
 
-    @Transform(({value}): string => value?.trim())
-    description?: string
 
     gender?:string
 

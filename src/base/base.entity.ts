@@ -9,8 +9,7 @@ export class BaseEntity{
     lastName: string
     @Column({type: 'varchar'})
     phone: string
-    @Column({type: 'varchar', length:200})
-    description: string
+    
     @Column({type: 'varchar', length:50})
     gender:string
 

@@ -72,7 +72,6 @@ export class LenderService {
             dto.name? lender.name = dto.name: lender.name = lender.name;
             dto.lastName? lender.lastName = dto.lastName: lender.lastName = lender.lastName;
             dto.phone? lender.phone = dto.phone: lender.phone = lender.phone;
-            dto.description? lender.description = dto.description: lender.description = lender.description;
             dto.gender? lender.gender = dto.gender: lender.gender = lender.gender;
             dto.ci? lender.ci = dto.ci: lender.ci = lender.ci;
             dto.birthdate? lender.birthdate = dto.birthdate: lender.birthdate = lender.birthdate;

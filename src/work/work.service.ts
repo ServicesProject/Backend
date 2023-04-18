@@ -61,6 +61,7 @@ export class WorkService {
             lat:dto.lat,
             lng:dto.lng,
             creationDate: new Date(),
+            description:dto.description,
             lender: lender,
             rating: null
         }
@@ -80,6 +81,7 @@ export class WorkService {
         dto.category? worker.category = dto.category: worker.category = worker.category;
         dto.lat? worker.lat = dto.lat: worker.lat = worker.lat;
         dto.lng? worker.lng = dto.lng: worker.lng = worker.lng;
+        dto.description? worker.description = dto.description: worker.description = worker.description;
         return await this.WorkRepository.save(worker)
     }
 

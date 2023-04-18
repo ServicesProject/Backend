@@ -33,6 +33,9 @@ export class WorkEntity{
 
     @Column({ type: 'date' })
     creationDate: Date;
+
+    @Column({type: 'varchar', length:200})
+    description: string
     
     //coordinates
 

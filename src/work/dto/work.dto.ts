@@ -46,6 +46,9 @@ export class WorkDto{
 
     creationDate: Date
 
+    @Transform(({value}): string => value?.trim())
+    description?: string
+
     //coordinates
     
     @IsNotEmpty()
