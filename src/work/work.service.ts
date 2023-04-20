@@ -88,10 +88,6 @@ export class WorkService {
     async searchWorksintheMap(dto: searchWorks): Promise<any>{
         const queryBuilder = this.WorkRepository.createQueryBuilder('work');
 
-        if(dto.area){
-            queryBuilder.andWhere('work.area = :area', { area: dto.area });
-        }
-
         if(dto.category){
             queryBuilder.andWhere('work.category = :category', { category: dto.category });
         }
