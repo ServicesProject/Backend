@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './user.entity';
 import { MailServiceService } from 'src/mailer/mail-service/mail-service.service';
-import { ValidateDto } from 'src/token/dto/validate.dto';
+
 
 
 @Injectable()

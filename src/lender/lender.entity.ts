@@ -1,4 +1,5 @@
 import { BaseEntity } from "src/base/base.entity";
+import { NotificationEntity } from "src/notification/notification.entity";
 import { WorkEntity } from "src/work/work.entity";
 import { Entity, OneToMany } from "typeorm";
 

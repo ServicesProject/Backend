@@ -16,9 +16,8 @@ import { SharedUsersModule } from './shared/shared-users/shared-users.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailServiceService } from './mailer/mail-service/mail-service.service';
-import { RatingService } from './rating/rating.service';
-import { RatingController } from './rating/rating.controller';
 import { RatingModule } from './rating/rating.module';
+import { NotificationModule } from './notification/notification.module';
 
 
 @Module({
@@ -73,7 +72,8 @@ import { RatingModule } from './rating/rating.module';
   GuardModule,
   LenderModule,
   SharedUsersModule,
-  RatingModule
+  RatingModule,
+  NotificationModule
 ],
   controllers: [AppController],
   providers: [AppService, MailServiceService],
