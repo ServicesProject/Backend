@@ -10,7 +10,7 @@ export class NotificationEntity{
     message: string;
 
     @Column({ default: 'pendiente' })
-    state: 'pendiente' | 'aceptado' | 'rechazado';
+    state: string;
 
     @Column({type: 'int', nullable:false})
     userId: number

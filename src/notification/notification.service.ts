@@ -42,4 +42,29 @@ export class NotificationService {
         return this.notificationRepository.save(notification)
     }
 
+
+    async changeStateNotification(id: number, newState: string){
+        const notificacion = await this.notificationRepository.findOne({
+            where:{
+                id:id
+            }
+        });
+    
+        if (!notificacion) {
+          throw new Error('Notificacion no encontrada');
+        }
+        notificacion.state = newState;
+        return await this.notificationRepository.save(notificacion);
+      }
+
+      async getAllNotification(): Promise<NotificationEntity[]>{
+        const list = await this.notificationRepository.find()
+        if(!list.length){
+            throw new NotFoundException({message: 'There are not notification'})
+        }
+        return list
+    }
+
+    /*HACER GET PARA LENDER Y OTRO PARA IDUSER*/
+
 }
