@@ -41,7 +41,7 @@ export class WorkService {
             }, relations:['lender']
         })
         if(!worker){
-            throw new NotFoundException({message: 'Worker is not in the data'})
+            throw new NotFoundException({message: 'Service is not in the data'})
         }
         return worker
     }

@@ -1,12 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { NotificationEntity } from './notification.entity';
-import { Repository } from 'typeorm';
+import { In, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotificationDto } from './dto/notification.dto';
 import { LenderService } from 'src/lender/lender.service';
 import { UserService } from 'src/user/user.service';
 import { WorkService } from 'src/work/work.service';
-import { log } from 'console';
+import { NotificationWithWorkDto } from './dto/notificationWithWorks.dto';
+import { NotificationWorkUserDto } from './dto/notificationWorkUser.dto';
+
 
 @Injectable()
 export class NotificationService {
@@ -43,28 +45,102 @@ export class NotificationService {
     }
 
 
-    async changeStateNotification(id: number, newState: string){
+    async changeStateNotification(id: number, newState: string, newMessage:string){
         const notificacion = await this.notificationRepository.findOne({
             where:{
                 id:id
             }
         });
-    
         if (!notificacion) {
           throw new Error('Notificacion no encontrada');
         }
         notificacion.state = newState;
+        notificacion.message= newMessage
         return await this.notificationRepository.save(notificacion);
       }
 
-      async getAllNotification(): Promise<NotificationEntity[]>{
-        const list = await this.notificationRepository.find()
+      async getNotificationUser(idUser: number): Promise<NotificationEntity[]>{
+        const list = await this.notificationRepository.find({
+            where:{
+                userId:idUser,
+                state: Not(In(["pendiente", "recibido", "terminado"])),
+            }, 
+        })
         if(!list.length){
             throw new NotFoundException({message: 'There are not notification'})
         }
         return list
     }
 
-    /*HACER GET PARA LENDER Y OTRO PARA IDUSER*/
+    async getNotificationLender(email: string): Promise<NotificationEntity[]>{
+        const list = await this.notificationRepository.find({
+            where:{
+                lenderEmail:email,
+                state: "pendiente"
+            }, 
+        })
+        if(!list.length){
+            throw new NotFoundException({message: 'There are not notification'})
+        }
+        return list
+    }
+
+    async getAcceptedContractsUser(idUser: number):Promise<NotificationWithWorkDto[]>{
+        const list = await this.notificationRepository.find({
+            where:{
+                userId:idUser,
+                state: In(["aceptado", "terminado"])
+            }, 
+        })
+        if(!list.length){
+            throw new NotFoundException({message: 'There are not contracts'})
+        }
+
+        const promises = list.map(async (x) => {
+            const work = await this.workRepository.getlenderWork(x.workId);
+            const notificationWithWork: NotificationWithWorkDto = {
+              work: work,
+              message: x.message,
+              state: x.state,
+              userId: x.userId,
+              lenderEmail: x.lenderEmail
+            };
+            return notificationWithWork;
+          });
+        
+          const newList = await Promise.all(promises);
+        
+          return newList;
+    }
+
+    async getAcceptedContractsLender(email: string):Promise<NotificationWorkUserDto[]>{
+        const list = await this.notificationRepository.find({
+            where:{
+                lenderEmail:email,
+                state: In(["aceptado", "terminado"])
+            }, 
+        })
+        if(!list.length){
+            throw new NotFoundException({message: 'There are not contracts'})
+        }
+
+        const promises = list.map(async (x) => {
+            const work = await this.workRepository.getlenderWork(x.workId);
+            let user = await this.userRepository.findById(x.userId)
+            const notificationWithWork: NotificationWorkUserDto = {
+              work: work,
+              user:user,
+              message: x.message,
+              state: x.state,
+              lenderEmail: x.lenderEmail
+            };
+            return notificationWithWork;
+          });
+        
+          const newList = await Promise.all(promises);
+        
+          return newList;
+       
+    }
 
 }

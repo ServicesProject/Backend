@@ -66,8 +66,6 @@ export class LenderService {
     
     async updateLender(email:string, dto: LenderDto): Promise<any>{
         const lender = await this.findByEmailLender(email)
-        console.log(lender);
-        
         if(lender){
             dto.name? lender.name = dto.name: lender.name = lender.name;
             dto.lastName? lender.lastName = dto.lastName: lender.lastName = lender.lastName;
