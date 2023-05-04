@@ -63,7 +63,7 @@ export class NotificationService {
         const list = await this.notificationRepository.find({
             where:{
                 userId:idUser,
-                state: Not(In(["pendiente", "activo", "terminado"])),
+                state: In(["aceptado", "rechazado"]),
             }, 
         })     
         return list
@@ -83,7 +83,7 @@ export class NotificationService {
         const list = await this.notificationRepository.find({
             where:{
                 userId:idUser,
-                state: In(["activo", "terminado"])
+                state: In(["aceptado", "terminado", "recibido"])
             }, 
         })
         
@@ -108,7 +108,7 @@ export class NotificationService {
         const list = await this.notificationRepository.find({
             where:{
                 lenderEmail:email,
-                state: In(["activo", "terminado"])
+                state: In(["aceptado", "terminado", "recibido"])
             }, 
         })
 
@@ -130,17 +130,15 @@ export class NotificationService {
           return newList;
     }
 
-    async getAcceptContract(idUser: number, idWork:number ): Promise<NotificationEntity[]>{
-        const list = await this.notificationRepository.find({
+    async getAcceptContract(idUser: number, idWork:number ): Promise<NotificationEntity>{
+        const list = await this.notificationRepository.findOne({
             where:{
                 userId:idUser,
                 workId: idWork,
-                state: "activo"
+                state: In(["aceptado", "recibido"])
             }, 
         })
-        if(!list.length){
-            throw new NotFoundException({message: 'There is not a contract '})
-        }
+    
         return list
     }
 
