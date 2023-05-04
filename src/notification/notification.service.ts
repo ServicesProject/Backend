@@ -63,15 +63,12 @@ export class NotificationService {
         const list = await this.notificationRepository.find({
             where:{
                 userId:idUser,
-                state: Not(In(["pendiente", "recibido", "terminado"])),
+                state: Not(In(["pendiente", "activo", "terminado"])),
             }, 
-        })
-        if(!list.length){
-            throw new NotFoundException({message: 'There are not notification'})
-        }
+        })     
         return list
     }
-
+ 
     async getNotificationLender(email: string): Promise<NotificationEntity[]>{
         const list = await this.notificationRepository.find({
             where:{
@@ -79,9 +76,6 @@ export class NotificationService {
                 state: "pendiente"
             }, 
         })
-        if(!list.length){
-            throw new NotFoundException({message: 'There are not notification'})
-        }
         return list
     }
 
@@ -89,13 +83,10 @@ export class NotificationService {
         const list = await this.notificationRepository.find({
             where:{
                 userId:idUser,
-                state: In(["aceptado", "terminado"])
+                state: In(["activo", "terminado"])
             }, 
         })
-        if(!list.length){
-            throw new NotFoundException({message: 'There are not contracts'})
-        }
-
+        
         const promises = list.map(async (x) => {
             const work = await this.workRepository.getlenderWork(x.workId);
             const notificationWithWork: NotificationWithWorkDto = {
@@ -117,12 +108,9 @@ export class NotificationService {
         const list = await this.notificationRepository.find({
             where:{
                 lenderEmail:email,
-                state: In(["aceptado", "terminado"])
+                state: In(["activo", "terminado"])
             }, 
         })
-        if(!list.length){
-            throw new NotFoundException({message: 'There are not contracts'})
-        }
 
         const promises = list.map(async (x) => {
             const work = await this.workRepository.getlenderWork(x.workId);
@@ -140,7 +128,20 @@ export class NotificationService {
           const newList = await Promise.all(promises);
         
           return newList;
-       
+    }
+
+    async getAcceptContract(idUser: number, idWork:number ): Promise<NotificationEntity[]>{
+        const list = await this.notificationRepository.find({
+            where:{
+                userId:idUser,
+                workId: idWork,
+                state: "activo"
+            }, 
+        })
+        if(!list.length){
+            throw new NotFoundException({message: 'There is not a contract '})
+        }
+        return list
     }
 
 }

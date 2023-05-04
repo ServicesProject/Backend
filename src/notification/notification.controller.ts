@@ -13,8 +13,6 @@ export class NotificationController {
 
     @Put(':id/state')
     async changeState(@Param('id') id: number,@Body("state") state: string,@Body("message") text: string){
-       
-        
         return await this.notificationService.changeStateNotification(id,state,text)
     }
 
@@ -36,6 +34,11 @@ export class NotificationController {
     @Get(':lenderEmail/state/accepted/lenders')
         async getAllAcceptLenderNotifications(@Param('lenderEmail') email: string) {
         return await this.notificationService.getAcceptedContractsLender(email);
+    }
+
+    @Get('user/:id/service/:workId')
+    async getAcceptContract(@Param('id', ParseIntPipe) id:number, @Param('workId', ParseIntPipe) workId:number){
+        return await this.notificationService.getAcceptContract(id,workId)
     }
 
 }
