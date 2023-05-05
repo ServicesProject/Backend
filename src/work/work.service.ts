@@ -70,7 +70,7 @@ export class WorkService {
     }
 
     async update(id:number, dto: WorkDto): Promise<any>{
-        const worker = await this.findById(id)
+        let worker = await this.findById(id)
         dto.job? worker.job = dto.job: worker.job = worker.job;
         dto.experience? worker.experience = dto.experience: worker.experience = worker.experience;
         dto.contract? worker.contract = dto.contract: worker.contract = worker.contract;
@@ -79,10 +79,11 @@ export class WorkService {
         dto.workTime? worker.workTime = dto.workTime: worker.workTime = worker.workTime;
         dto.salary? worker.salary = dto.salary: worker.salary = worker.salary;
         dto.category? worker.category = dto.category: worker.category = worker.category;
+        dto.description? worker.description = dto.description: worker.description = worker.description;
         dto.lat? worker.lat = dto.lat: worker.lat = worker.lat;
         dto.lng? worker.lng = dto.lng: worker.lng = worker.lng;
-        dto.description? worker.description = dto.description: worker.description = worker.description;
         return await this.WorkRepository.save(worker)
+        
     }
 
     async searchWorksintheMap(dto: searchWorks): Promise<any>{

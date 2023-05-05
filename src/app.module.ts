@@ -32,6 +32,9 @@ import { NotificationModule } from './notification/notification.module';
           service: 'smtp-mail.outlook.com',
           port: 587,
           secure: false,
+          tls: {
+            rejectUnauthorized: false
+          },
           auth: {
             user: 'nexa.bolivia@outlook.com',
             pass: 'nexanexa38',

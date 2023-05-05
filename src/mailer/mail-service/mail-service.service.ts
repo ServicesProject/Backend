@@ -15,10 +15,6 @@ export class MailServiceService {
               url: `http://localhost:4200/confirmarEmail?email=${email.toString()}`
             },
           })
-          .then(() => {
-            console.log('funciona');
-            
-          })
           .catch((error) => {
             console.log(error);
           });
