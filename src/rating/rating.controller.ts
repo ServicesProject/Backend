@@ -21,8 +21,7 @@ export class RatingController {
 
     @Get(':id/messages')
     async getMessagesForWork(@Param('id') id: number) {
-      const messages = await this.ratingService.getMessagesForWork(id);
-      return { messages };
+      return await this.ratingService.getMessagesFromUsers(id)
     }
 
 }

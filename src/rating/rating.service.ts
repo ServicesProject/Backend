@@ -1,15 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { RatingDto } from './dto/rating.dto';
 import { RatingEntity } from './rating.entity';
 import { WorkService } from 'src/work/work.service';
+import { RatingMessagesDto } from './dto/rating.messages.dto';
+import { UserService } from 'src/user/user.service';
 
 
 @Injectable()
 export class RatingService {
 
-    constructor(@InjectRepository(RatingEntity) private ratingRepository: Repository<RatingEntity>, private workRepository: WorkService){
+    constructor(@InjectRepository(RatingEntity) private ratingRepository: Repository<RatingEntity>, private workRepository: WorkService, private userRepository: UserService){
     }
 
     async getAll():Promise<RatingEntity[]>{
@@ -45,13 +47,30 @@ export class RatingService {
       }
       
 
-      async  getMessagesForWork(workId: number): Promise<string[]> {
-        const work = await this.workRepository.findById(workId);
-        const ratings = await this.ratingRepository.find({ where: { work } });
-        const messages = ratings.map((rating) => rating.message);
-        return messages;
-      }
       
+      async getMessagesFromUsers(idWork: number):Promise<RatingMessagesDto[]>{
+        const work = await this.workRepository.findById(idWork);
+        const notEmptyMessage = await this.ratingRepository.find({
+            where:{
+                work,
+                message: Not('')
+            }
+        })
+
+        const promises = notEmptyMessage.map(async (x) => {
+            const user = await this.userRepository.findById(x.userId);
+            const allUserNotification: RatingMessagesDto = {
+                user: user,
+                message: x.message,
+                point: x.point,
+                idWork: idWork
+            };
+            return allUserNotification
+          });
+
+          const newList = await Promise.all(promises);
+          return newList;
+      }
 
 
 
