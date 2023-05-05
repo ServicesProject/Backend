@@ -5,6 +5,7 @@ import { RatingDto } from './dto/rating.dto';
 import { RatingEntity } from './rating.entity';
 import { WorkService } from 'src/work/work.service';
 
+
 @Injectable()
 export class RatingService {
 
@@ -35,8 +36,23 @@ export class RatingService {
         return await this.ratingRepository.save(rating)
     }
 
-    
+    async averagePointsForWork(workId: number) {
+        const work = await this.workRepository.findById(workId);
+        const ratings = await this.ratingRepository.find({ where: { work } });
+        const totalPoints = ratings.reduce((acc, rating) => acc + rating.point, 0);
+        const averagePoints = totalPoints / ratings.length;
+        return Math.round(averagePoints);
+      }
+      
 
-    
+      async  getMessagesForWork(workId: number): Promise<string[]> {
+        const work = await this.workRepository.findById(workId);
+        const ratings = await this.ratingRepository.find({ where: { work } });
+        const messages = ratings.map((rating) => rating.message);
+        return messages;
+      }
+      
+
+
 
 }
