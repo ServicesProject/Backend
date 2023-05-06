@@ -92,6 +92,9 @@ export class WorkService {
         if(dto.category){
             queryBuilder.andWhere('work.category = :category', { category: dto.category });
         }
+        if(dto.job){
+            queryBuilder.andWhere('work.job = :job', { job: dto.job });
+        }
 
         if(dto.experience){
             queryBuilder.andWhere('work.experience = :experience', { experience: dto.experience });
