@@ -13,7 +13,9 @@ async function bootstrap() {
   console.log('PORT: ',port);
   console.log('********************');
 
-  await app.listen(port);
+  await app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`)
+  })
 }
 
 bootstrap();
