@@ -15,7 +15,7 @@ export class BaseEntity{
 
     @Column({type: 'varchar'})
     ci:string
-    @Column({ type: 'date' })
+    @Column({ type: 'timestamp' })
     birthdate: Date;
 
     @Column({type:'boolean'})

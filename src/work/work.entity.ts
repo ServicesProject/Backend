@@ -31,7 +31,7 @@ export class WorkEntity{
     @Column({type: 'varchar', length:50, nullable:false})
     workTime: string
 
-    @Column({ type: 'date' })
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     creationDate: Date;
 
     @Column({type: 'varchar', length:200})

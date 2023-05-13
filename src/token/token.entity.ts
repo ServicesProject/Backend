@@ -13,7 +13,7 @@ export class TokenEntity extends BaseEntity{
   @CreateDateColumn({
     type: 'timestamp',
     name: 'expiration_date',
-    default: () => "CURRENT_TIMESTAMP + INTERVAL '1 month'",
+    default: () => 'CURRENT_TIMESTAMP(6)',
   })
   expirationDate: Date;
 
