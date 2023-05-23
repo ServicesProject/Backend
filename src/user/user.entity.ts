@@ -1,6 +1,4 @@
 import { BaseEntity } from "src/base/base.entity"
-import { NotificationEntity } from "src/notification/notification.entity"
-import { RatingEntity } from "src/rating/rating.entity"
 import { RolType } from "src/rol/rol.enum"
 import { TokenEntity } from "src/token/token.entity"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
@@ -8,7 +6,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 @Entity({name: 'user'})
 export class UserEntity extends BaseEntity{
 
-    @Column({type:'boolean'})
+    @Column({nullable: true,type:'boolean'})
     accountConfirmed: boolean
     @Column({type: 'varchar',nullable:false})
     password:string
