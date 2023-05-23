@@ -10,9 +10,8 @@ export class TokenEntity extends BaseEntity{
   @Generated("uuid")
   value: string;
 
-  @CreateDateColumn({
+  @Column({
     type: 'timestamp',
-    name: 'expiration_date',
     default: () => "CURRENT_TIMESTAMP + INTERVAL '1 month'",
   })
   expirationDate: Date;
