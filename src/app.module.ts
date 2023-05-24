@@ -21,7 +21,9 @@ import { NotificationModule } from './notification/notification.module';
 
 
 @Module({
-  imports: [ConfigModule.forRoot({ 
+  imports: [
+    
+    ConfigModule.forRoot({ 
     envFilePath: '.env', 
     isGlobal: true,
     }),
@@ -56,17 +58,17 @@ import { NotificationModule } from './notification/notification.module';
     }), 
   TypeOrmModule.forRootAsync({
     useFactory: () => ({
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE ,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      logging:false 
-    }),
-    inject: [ConfigService],
+        type: 'postgres',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT),
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+        logging: false,
+      }),
+      inject: [ConfigService],
   }),
   UserModule,
   WorkModule,
