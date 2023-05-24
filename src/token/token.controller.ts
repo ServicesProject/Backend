@@ -26,7 +26,6 @@ export class TokenController {
           console.log(err);
           
         }
-        
     }
     @Authorization(false)
     @Put('validateEmail')
