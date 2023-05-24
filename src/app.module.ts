@@ -55,14 +55,13 @@ import { NotificationModule } from './notification/notification.module';
       }),
     }), 
   TypeOrmModule.forRootAsync({
-    imports: [ConfigModule],
-    useFactory: (configService: ConfigService) => ({
+    useFactory: () => ({
       type: 'mysql',
-      host: configService.get<string>(DB_HOST),
-      port: configService.get<number>(DB_PORT),
-      username: configService.get<string>(DB_USER),
-      password: configService.get<string>(DB_PASSWORD),
-      database: configService.get<string>(DB_DATABASE),
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE ,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging:false 
