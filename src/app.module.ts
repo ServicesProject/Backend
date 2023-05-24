@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from './config/constants';
 import { UserModule } from './user/user.module';
 
 import { WorkModule } from './work/work.module';
@@ -59,14 +58,11 @@ import { NotificationModule } from './notification/notification.module';
   TypeOrmModule.forRootAsync({
     useFactory: () => ({
         type: 'postgres',
-        host: process.env.DB_HOST,
-        port: parseInt(process.env.DB_PORT),
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
+        url: process.env.DATABASE_URL,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
         logging: false,
+        autoLoadEntities:true
       }),
       inject: [ConfigService],
   }),
