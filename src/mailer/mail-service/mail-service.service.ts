@@ -12,7 +12,7 @@ export class MailServiceService {
             subject: 'Verificacion del email',
             template: 'mail.template.hbs', // The `.pug`, `.ejs` or `.hbs` extension is appended automatically.
             context: {
-              url: `https://nexaback.up.railway.app/confirmarEmail?email=${email.toString()}`
+              url: `https://serviceproject-33041.web.app/confirmarEmail?email=${email.toString()}`
             },
           })
           .catch((error) => {
