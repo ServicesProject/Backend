@@ -31,7 +31,7 @@ export class RatingService {
             work: work,
             userId: dto.idUser,
             point: dto.point,
-            message:dto.message
+            message:dto.message?dto.message:''
         }
 
         const rating = this.ratingRepository.create(ratingToSave)
