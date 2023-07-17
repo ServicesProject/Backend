@@ -60,7 +60,7 @@ import { NotificationModule } from './notification/notification.module';
         type: 'postgres',
         url: process.env.DATABASE_URL,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false,
+        synchronize: true,
         logging: false,
         autoLoadEntities:true
       }),
